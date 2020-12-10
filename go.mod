@@ -1,4 +1,4 @@
-module github.com/Evidlo/remarkable_news
+module github.com/owulveryck/remarkable_news
 
 go 1.15
 

@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/Evidlo/remarkable_news/provider"
-	"github.com/Evidlo/remarkable_news/provider/generic"
+	"github.com/owulveryck/remarkable_news/provider"
+	"github.com/owulveryck/remarkable_news/provider/generic"
 	"github.com/disintegration/imaging"
 	"github.com/sethvargo/go-envconfig"
 )
