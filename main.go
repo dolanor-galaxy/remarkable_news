@@ -48,7 +48,7 @@ func hasSlept(ctx context.Context, healthCheck time.Duration, sleptTime time.Dur
 			case <-ctx.Done():
 				return
 			case <-tick.C:
-				if time.Now().Sub(last) > sleptTime {
+				if time.Now().Round(0).Sub(last) > sleptTime {
 					signalC <- struct{}{}
 				}
 				last = time.Now()
@@ -66,7 +66,7 @@ func run(ctx context.Context, c configuration) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	runC := make(chan struct{})
+	runC := make(chan struct{}, 1)
 	sleptC := hasSlept(ctx, c.HealthCheck, c.HealthCheck*2)
 
 	for {
@@ -88,6 +88,7 @@ func run(ctx context.Context, c configuration) error {
 }
 
 func runProvider(ctx context.Context, c configuration, ticker *time.Ticker, prvd provider.Provider) error {
+	log.Println("Waiting for the provider to go online")
 	err := prvd.WaitOnline(ctx)
 	if err != nil {
 		return err
@@ -107,6 +108,7 @@ func runProvider(ctx context.Context, c configuration, ticker *time.Ticker, prvd
 	if err != nil {
 		return err
 	}
+	log.Println("Picture saved: ", c.Output)
 	return nil
 }
 
